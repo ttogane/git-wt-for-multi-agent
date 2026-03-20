@@ -1,0 +1,84 @@
+# gh-wt
+
+`gh-wt` は `git worktree` と `tmux` を使った並列開発用の zsh ユーティリティです。
+
+## 前提
+
+- zsh
+- git
+- tmux
+- 任意: fzf（`gh-wt list` の選択UI）
+- 任意: cursor / code（`gh-wt open` で利用）
+
+## セットアップ
+
+`~/.zshrc` で `~/.worktree_utils` を読み込む:
+
+```zsh
+source "$HOME/.worktree_utils"
+```
+
+反映:
+
+```zsh
+source ~/.zshrc
+```
+
+## コマンド
+
+### Switch / Checkout（tmux attach/new）
+
+```bash
+gh-wt switch <branch>
+gh-wt switch -c <branch>
+gh-wt checkout <branch>
+gh-wt checkout -b <branch>
+```
+
+- 既存 worktree があれば再利用
+- なければ作成
+- `tmux` セッションへ attach/new（`wt:<repo>:<branch-slug>`）
+
+Editor も開く場合:
+
+```bash
+gh-wt switch --open <branch>
+gh-wt checkout --open <branch>
+```
+
+### Open（Editorのみ）
+
+```bash
+gh-wt open <branch>
+```
+
+- 対象 worktree を editor で新規ウィンドウ起動
+- profile / user-data-dir は `~/.worktree_utils` の設定に従う
+
+### Branch 操作
+
+```bash
+gh-wt branch -D <branch>
+gh-wt branch -M <old> <new>
+gh-wt branch -M <new>
+```
+
+- `-D`: dirty worktree は削除失敗
+- `-M`: branch 名と worktree dir 名を同期 rename
+- `-M <new>` は current branch を old とみなす
+
+### List
+
+```bash
+gh-wt list
+gh-wt list --plain
+```
+
+- `gh-wt list`: `fzf` で branch/worktree を選択し、Enter で `open`
+- `gh-wt list --plain`: 一覧をテキスト表示
+
+## 推奨フロー
+
+1. `gh-wt switch <branch>` で tmux セッション作業に入る
+2. GUI が必要なときだけ `gh-wt open <branch>`
+3. 不要 branch は `gh-wt branch -D <branch>`
