@@ -33,18 +33,13 @@ gh-wt switch <branch>
 gh-wt switch -c <branch>
 gh-wt checkout <branch>
 gh-wt checkout -b <branch>
+gh-wt switch --open <branch>
+gh-wt checkout --open <branch>
 ```
 
 - 既存 worktree があれば再利用
 - なければ作成
 - `tmux` セッションへ attach/new（`wt_<repo>_<branch-slug>`）
-
-Editor も開く場合:
-
-```bash
-gh-wt switch --open <branch>
-gh-wt checkout --open <branch>
-```
 
 ### Open（Editorのみ）
 
@@ -58,14 +53,15 @@ gh-wt open <branch>
 ### Branch 操作
 
 ```bash
-gh-wt branch -D <branch>
-gh-wt branch -M <old> <new>
-gh-wt branch -M <new>
+gh-wt delete <branch>
+gh-wt delete
+gh-wt rename <old> <new>
+gh-wt rename <new>
 ```
 
-- `-D`: dirty worktree は削除失敗
-- `-M`: branch 名と worktree dir 名を同期 rename
-- `-M <new>` は current branch を old とみなす
+- `delete`: dirty worktree は削除失敗（引数なしは `fzf` 選択）
+- `rename`: branch 名と worktree dir 名を同期 rename
+- `rename <new>` は current branch を old とみなす
 
 ### List
 
@@ -81,4 +77,4 @@ gh-wt list --plain
 
 1. `gh-wt switch <branch>` で tmux セッション作業に入る
 2. GUI が必要なときだけ `gh-wt open <branch>`
-3. 不要 branch は `gh-wt branch -D <branch>`
+3. 不要 branch は `gh-wt delete <branch>`（または `gh-wt delete`）
