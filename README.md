@@ -37,7 +37,7 @@ gh-wt checkout -b <branch>
 
 - 既存 worktree があれば再利用
 - なければ作成
-- `tmux` セッションへ attach/new（`wt:<repo>:<branch-slug>`）
+- `tmux` セッションへ attach/new（`wt_<repo>_<branch-slug>`）
 
 Editor も開く場合:
 
