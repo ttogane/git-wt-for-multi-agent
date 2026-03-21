@@ -61,6 +61,7 @@ gh-wt rename <new>
 ```
 
 - `delete`: dirty worktree は削除失敗（引数なしは `fzf` 選択）
+- `delete`: 対応する tmux session も自動で kill
 - `rename`: branch 名と worktree dir 名を同期 rename
 - `rename <new>` は current branch を old とみなす
 
